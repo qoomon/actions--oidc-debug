@@ -14,7 +14,7 @@ export const action = () => run(async () => {
 
   const tokenPayload = JSON.parse(Buffer.from(input.oidcToken.split('.')[1], 'base64').toString())
   
-  core.info('OIDC Token Payload: ' + JSON.stringify(tokenPayload, null, 2)
+  core.info('OIDC Token Payload: ' + JSON.stringify(tokenPayload, null, 2))
 })
 
 // Execute the action, if running as main module
