@@ -1,5 +1,12 @@
 # OIDC Debug
 An action to print OIDC token payload
+
+## Inputs
+```yaml
+inputs:
+  oidc-token:
+    description: 'An OIDC token'
+```
     
 #### Release New Action Version
 - Trigger the [Release workflow](../../actions/workflows/release.yaml)
