@@ -9,39 +9,12 @@ import {fileURLToPath} from 'url'
 export const action = () => run(async () => {
   const context = github.context
   const input = {
-    token: getInput('token', {required: true})!,
-    string: getInput('stringInput'),
-    yaml: z.optional(z.array(z.string())).default([])
-        .parse(getYamlInput('yamlInput')),
+    oidcToken: getInput('oidc-token') ?? await core.getIDToken(),
   }
-  const octokit = github.getOctokit(input.token)
 
-  await octokit.rest.issues.create({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    title: 'New issue',
-    body: 'This is a new issue',
-  })
-
-  const httpClient = new HttpClient()
-  httpClient.get('https://api.github.com').then((response) => {
-    core.info(`HTTP response: ${response.message.statusCode}`)
-  })
-
-  const result = await exec('echo', ['Hello world!'])
-      .then(({stdout}) => stdout.toString())
-
-  // core.setSecret(value) will mask the value in logs
-  core.setSecret('secretXXX')
-  core.info(result)
-
-  core.startGroup('Group title')
-  core.info(result)
-  core.endGroup()
-
-  // core.setFailed('This is a failure')
-  // core.setOutput(key,value) will set the value of an output
-  core.setOutput('stringOutput', result)
+  const tokenPayload = JSON.parse(Buffer.from(input.oidcToken.split('.')[1], 'base64').toString())
+  
+  core.info('OIDC Token Payload: ' + JSON.stringify(tokenPayload, null, 2)
 })
 
 // Execute the action, if running as main module
