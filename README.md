@@ -1,4 +1,4 @@
-# OIDC Debug
+# OIDC Debug &nbsp; [![Actions](https://img.shields.io/badge/qoomon-GitHub%20Actions-blue)](https://github.com/qoomon/actions)
 An action to print OIDC token payload
 
 ## Inputs
